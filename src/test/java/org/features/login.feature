@@ -1,9 +1,5 @@
 
   Feature: sign in
-
-#  Background:
-#    Given user is on the website https://www.saucedemo.com/
-
     Scenario: Successful Login with valid credentials
       Given user is on the website saucedemo
       When user fills in user-name textbox with standard_user

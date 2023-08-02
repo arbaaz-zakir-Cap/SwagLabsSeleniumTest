@@ -1,26 +1,36 @@
 package org.StepDefinitions;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import junit.framework.Assert;
+import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.swaglabs.pages.InventoryPage;
 import org.swaglabs.pages.LoginPage;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+
+import java.util.concurrent.TimeUnit;
+//import org.testng.Assert;
+//import org.testng.annotations.AfterTest;
+//import org.testng.annotations.BeforeTest;
 
 public class Login {
 
     public static WebDriver driver = new ChromeDriver();
     public LoginPage loginPage = new LoginPage(driver);
-    @BeforeTest
+
+    @Before
     public void beforeTests(){
-        LoginPage loginPage = new LoginPage(driver);
+        //LoginPage loginPage = new LoginPage(driver);
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        System.out.println("Before Test Run!!");
     }
-    @AfterTest
+    @After
     public void afterTest(){
         driver.quit();
     }
@@ -35,13 +45,13 @@ public class Login {
         loginPage.enterUsername("standard_user");
         //throw new io.cucumber.java.PendingException();
     }
-    @And("user fills in password textbox with secret_sauce")
+    @When("user fills in password textbox with secret_sauce")
     public void user_fills_in_password_textbox_with_secret_sauce() {
         // Write code here that turns the phrase above into concrete actions
         loginPage.enterPassword("secret_sauce");
         //throw new io.cucumber.java.PendingException();
     }
-    @And("user clicks login-button")
+    @When("user clicks login-button")
     public void user_clicks_login_button() {
         // Write code here that turns the phrase above into concrete actions
         loginPage.clickLoginButton();
@@ -49,9 +59,8 @@ public class Login {
     }
     @Then("user should see Products title")
     public void user_should_see_products_title() {
-        // Write code here that turns the phrase above into concrete actions
-        Assert.assertEquals("Products", driver.getTitle());
-        //throw new io.cucumber.java.PendingException();
+        Assert.assertEquals("Products", driver.findElement(By.xpath("//div[@id='header_container']/div[2]/span"))
+                .getText());
     }
 
 }

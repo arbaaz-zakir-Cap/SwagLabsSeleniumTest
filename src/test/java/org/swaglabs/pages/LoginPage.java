@@ -39,5 +39,8 @@ public class LoginPage {
         driver.findElement(loginButton)
                 .click();
     }
+    public WebDriver getDriver(){
+        return this.driver;
+    }
 
 }

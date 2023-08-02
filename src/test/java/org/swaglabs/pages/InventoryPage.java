@@ -10,6 +10,7 @@ public class InventoryPage {
     WebDriver driver;
 
     //backpack text, add to cart, picture
+    By productsTitle = By.xpath("//div[@id='header_container']/div[2]/span");
     By backpackImg = By.xpath("//img[@alt=\"Sauce Labs Backpack\"]");
     By backpackTxt = RelativeLocator.with(By.tagName("div")).toRightOf(backpackImg);
     By backpackAddtoCart = By.id("add-to-cart-sauce-labs-backpack");
@@ -61,6 +62,10 @@ public class InventoryPage {
     public InventoryPage(WebDriver driver){
 
         this.driver = driver;
+    }
+
+    public String getProductsTitle(){
+        return driver.findElement(productsTitle).getText();
     }
 
     public void clickOnBackpackImg(){

@@ -1,8 +1,7 @@
 package org.StepDefinitions;
 
-import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,7 +9,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.swaglabs.pages.InventoryPage;
 import org.swaglabs.pages.LoginPage;
 
 import java.util.concurrent.TimeUnit;
@@ -18,20 +16,20 @@ import java.util.concurrent.TimeUnit;
 //import org.testng.annotations.AfterTest;
 //import org.testng.annotations.BeforeTest;
 
-public class Login {
+public class LoginSteps {
 
     public static WebDriver driver = new ChromeDriver();
     public LoginPage loginPage = new LoginPage(driver);
 
     @Before
     public void beforeTests(){
-        //LoginPage loginPage = new LoginPage(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         System.out.println("Before Test Run!!");
     }
-    @After
-    public void afterTest(){
+
+    @AfterAll
+    public void AfterAll(){
         driver.quit();
     }
 
@@ -61,6 +59,17 @@ public class Login {
     public void user_should_see_products_title() {
         Assert.assertEquals("Products", driver.findElement(By.xpath("//div[@id='header_container']/div[2]/span"))
                 .getText());
+    }
+
+    @When("user fills in user-name textbox with not_standard_user")
+    public void user_fills_in_user_name_textbox_with_not_standard_user() {
+        // Write code here that turns the phrase above into concrete actions
+        loginPage.enterUsername("not_standard_user");
+    }
+    @Then("user should see error message Epic sadface: Username and password do not match any user in this service text")
+    public void user_should_see_error_message_epic_sadface_username_and_password_do_not_match_any_user_in_this_service_text() {
+        // Write code here that turns the phrase above into concrete actions
+       Assert.assertTrue(driver.findElement(By.xpath("//h3[@data-test='error']")).isDisplayed());
     }
 
 }
